@@ -4,7 +4,7 @@ import 'package:mood_diary/core/constants/app_text_styles.dart';
 
 class SubButtonList extends StatelessWidget {
   final List<String> labels;
-  final String selectedLabel;
+  final String? selectedLabel; 
   final Function(String) onSubButtonTap;
 
   const SubButtonList({
@@ -29,6 +29,7 @@ class SubButtonList extends StatelessWidget {
               return GestureDetector(
                 onTap: () => onSubButtonTap(label),
                 child: Container(
+                  key: ValueKey(label), 
                   padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
                   decoration: BoxDecoration(
                     color: isSelected ? AppColors.orange : AppColors.white,

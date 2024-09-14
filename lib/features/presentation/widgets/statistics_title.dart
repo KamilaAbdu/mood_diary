@@ -10,7 +10,7 @@ class StatisticsTitle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Text(
-        'Статистика',
+        'Статистика настроения',
         style: AppTextStyles.s20w400.copyWith(color: AppColors.black),
         textAlign: TextAlign.center,
       ),

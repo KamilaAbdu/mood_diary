@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mood_diary/features/domain/models/mood_data.dart';
+import 'package:mood_diary/features/data/models/chart_data.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:mood_diary/core/constants/app_colors.dart';
 
 class MoodLineChart extends StatelessWidget {
-  final List<MoodData> data;
+  final List<ChartData> data;
 
-  const MoodLineChart({super.key, required this.data});
+  const MoodLineChart({required this.data, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +20,16 @@ class MoodLineChart extends StatelessWidget {
           title: AxisTitle(text: 'Уровень настроения'),
         ),
         series: <CartesianSeries>[
-          LineSeries<MoodData, String>(
+          LineSeries<ChartData, String>(
             dataSource: data,
-            xValueMapper: (MoodData moodData, _) => moodData.date,
-            yValueMapper: (MoodData moodData, _) => moodData.moodLevel,
+            xValueMapper: (ChartData moodData, _) => moodData.date,
+            
             color: AppColors.orange,
-            width: 2,
+            width: 2, yValueMapper: (ChartData datum, int index) {  },
           ),
         ],
       ),
     );
   }
 }
+

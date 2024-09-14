@@ -17,7 +17,7 @@ class DiaryScreen extends StatefulWidget {
 class _DiaryScreenState extends State<DiaryScreen> {
   int selectedIndex = -1;
   int expandedIndex = -1;
-  String? selectedSubLabel;
+  String? selectedSubLabel; 
   double stressLevel = 0.5;
   double selfEsteem = 0.5;
   TextEditingController notesController = TextEditingController();

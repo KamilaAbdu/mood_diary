@@ -1,6 +1,12 @@
-class ChartData {
-  final String time;
-  final double value;
 
-  ChartData(this.time, this.value);
+class ChartData {
+  final String date; 
+  final String label; 
+  final double value; 
+
+  ChartData({
+    required this.date,
+    required this.label,
+    required this.value,
+  });
 }

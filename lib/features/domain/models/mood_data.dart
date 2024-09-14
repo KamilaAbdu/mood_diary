@@ -4,7 +4,6 @@ class MoodData {
 
   MoodData(this.date, this.moodLevel);
 
-  // Для преобразования в/из JSON
   Map<String, dynamic> toJson() => {
         'date': date,
         'moodLevel': moodLevel,

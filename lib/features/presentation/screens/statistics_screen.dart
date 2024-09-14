@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mood_diary/core/constants/app_dimens.dart';
 import 'package:mood_diary/features/data/providers/mood_provider.dart';
+import 'package:mood_diary/features/presentation/widgets/statistics_title.dart';
 import 'package:provider/provider.dart';
 import '../widgets/mood_line_chart.dart';
 import '../widgets/mood_pie_chart.dart';
@@ -16,13 +18,10 @@ class StatisticsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Статистика настроения',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: 20),
+          const Center(child: StatisticsTitle()),
+          const SizedBox(height: AppDimens.mediumVerticalPadding),
           MoodLineChart(data: moodData),  
-          const SizedBox(height: 20),
+          const SizedBox(height: AppDimens.smallVerticalPadding),
           MoodPieChart(data: moodData),  
         ],
       ),

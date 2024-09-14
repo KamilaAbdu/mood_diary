@@ -1,34 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:mood_diary/features/domain/models/mood_data.dart';
-import '../repositories/mood_repository.dart';
+import 'package:mood_diary/features/data/models/chart_data.dart';
+import 'package:mood_diary/features/domain/repositories/mood_repository_impl.dart';
 
-class MoodProvider extends ChangeNotifier {
-  final MoodRepository _repository;
+class MoodProvider with ChangeNotifier {
+  final List<ChartData> _moodDataList = [];
 
-  List<MoodData> _moodDataList = [];
+  MoodProvider(MoodRepositoryImpl moodRepositoryImpl);
 
-  MoodProvider(this._repository);
+  List<ChartData> get moodDataList => _moodDataList;
 
-  List<MoodData> get moodDataList => _moodDataList;
+  void addMoodData(ChartData moodData) {
+    _moodDataList.add(moodData);
+    notifyListeners();
+  }
 
- 
-  Future<void> loadMoodData() async { 
-    try {
-      _moodDataList = await _repository.getMoodData();
+  void removeMoodData(String label) {
+    _moodDataList.removeWhere((data) => data.label == label);
+    notifyListeners();
+  }
+
+  void updateMoodData(String label, double newValue) {
+    final index = _moodDataList.indexWhere((data) => data.label == label);
+    if (index != -1) {
+      // Обновляем данные по метке. Предположим, что метка уникальна и не изменяется.
+      final existingData = _moodDataList[index];
+      _moodDataList[index] = ChartData(
+        date: existingData.date, // предполагаем, что дата не изменяется
+        label: existingData.label,
+        value: newValue, 
+      );
       notifyListeners();
-    } catch (e) {
-    
-      print('Error loading mood data: $e');
     }
   }
 
-  Future<void> addMoodData(MoodData moodData) async {
-    try {
-      await _repository.addMoodData(moodData);
-      await loadMoodData(); 
-    } catch (e) {
-      
-      print('Error adding mood data: $e');
-    }
+  void clearMoodData() {
+    _moodDataList.clear();
+    notifyListeners();
   }
 }
+

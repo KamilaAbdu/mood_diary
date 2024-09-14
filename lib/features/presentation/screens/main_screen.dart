@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:mood_diary/core/constants/app_assets.dart';
+import 'package:mood_diary/features/presentation/screens/calendar_screen.dart';
+import 'package:mood_diary/features/presentation/screens/start_screen.dart';
 import 'package:mood_diary/features/presentation/widgets/custom_app_bar.dart';
 import 'package:mood_diary/features/presentation/screens/diary_screen.dart';
 import 'package:mood_diary/features/presentation/screens/statistics_screen.dart';
@@ -53,8 +55,21 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         time: time,
-        onBackPressed: () {},
-        onCalendarPressed: () {},
+        onBackPressed: () {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const StartScreen(),
+            ),
+          );
+          },
+        onCalendarPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CalendarScreen(),
+            ),
+          );
+        },
       ),
       body: Column(
         children: [

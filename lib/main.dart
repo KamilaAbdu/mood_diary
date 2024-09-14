@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:mood_diary/features/data/providers/mood_provider.dart';
 import 'package:mood_diary/features/data/sources/mood_local_data_source.dart';
 import 'package:mood_diary/features/domain/repositories/mood_repository_impl.dart';
-import 'package:mood_diary/features/presentation/screens/main_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mood_diary/features/presentation/screens/start_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -38,7 +38,7 @@ class MainApp extends StatelessWidget {
           ),
           primarySwatch: Colors.blue,
         ),
-        home: const MainScreen(),
+        home: const StartScreen(),
       ),
     );
   }
