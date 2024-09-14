@@ -8,16 +8,17 @@ import 'package:mood_diary/features/presentation/widgets/slider_section.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DiaryScreen extends StatefulWidget {
-  const DiaryScreen({super.key});
+  const DiaryScreen({Key? key}) : super(key: key);
 
   @override
-  State<DiaryScreen> createState() => _DiaryScreenState();
+  _DiaryScreenState createState() => _DiaryScreenState();
 }
 
 class _DiaryScreenState extends State<DiaryScreen> {
   int selectedIndex = -1;
   int expandedIndex = -1;
-  String? selectedSubLabel; 
+  String? selectedSubLabel;
+
   double stressLevel = 0.5;
   double selfEsteem = 0.5;
   TextEditingController notesController = TextEditingController();
@@ -36,53 +37,48 @@ class _DiaryScreenState extends State<DiaryScreen> {
   }
 
   bool _isFormValid() {
-    return selectedSubLabel != null && selectedSubLabel!.isNotEmpty && notesController.text.isNotEmpty;
+    return selectedSubLabel != null &&
+        selectedSubLabel!.isNotEmpty &&
+        notesController.text.isNotEmpty;
   }
 
   void _showSuccessDialog() {
     showDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Успех'),
-          content: const Text('Все данные успешно сохранены!'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('ОК'),
-            ),
-          ],
-        );
-      },
+      builder: (context) => AlertDialog(
+        title: const Text('Готово'),
+        content: const Text('Данные сохранены!'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 
   void _showErrorDialog() {
     showDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Ошибка'),
-          content: const Text('Все поля обязательны для заполнения!'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('ОК'),
-            ),
-          ],
-        );
-      },
+      builder: (context) => AlertDialog(
+        title: const Text('Ошибка'),
+        content: const Text('Все поля обязательны к заполнению!'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppDimens.mainHorizontalPadding),
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppDimens.mainHorizontalPadding),
       child: ListView(
         children: [
           MoodSelection(
@@ -93,12 +89,8 @@ class _DiaryScreenState extends State<DiaryScreen> {
             subButtonLabels: subButtonLabels,
             onMoodButtonSelected: (index) {
               setState(() {
-                if (selectedIndex == index) {
-                  expandedIndex = expandedIndex == index ? -1 : index;
-                } else {
-                  selectedIndex = index;
-                  expandedIndex = index;
-                }
+                selectedIndex = index;
+                expandedIndex = (expandedIndex == index) ? -1 : index;
                 selectedSubLabel = null;
               });
             },
@@ -111,16 +103,9 @@ class _DiaryScreenState extends State<DiaryScreen> {
           SliderSection(
             stressLevel: stressLevel,
             selfEsteem: selfEsteem,
-            onStressLevelChanged: (value) {
-              setState(() {
-                stressLevel = value;
-              });
-            },
-            onSelfEsteemChanged: (value) {
-              setState(() {
-                selfEsteem = value;
-              });
-            },
+            onStressLevelChanged: (value) =>
+                setState(() => stressLevel = value),
+            onSelfEsteemChanged: (value) => setState(() => selfEsteem = value),
           ),
           NotesField(notesController: notesController),
           const SizedBox(height: AppDimens.largeVerticalPadding),

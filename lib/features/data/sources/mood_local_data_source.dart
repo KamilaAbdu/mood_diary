@@ -1,8 +1,8 @@
-import '../../../core/utils/storage_helper.dart';
+import 'package:mood_diary/core/services/cache_service.dart';
 import '../../domain/models/mood_data.dart';
 
 class MoodLocalDataSource {
   Future<List<MoodData>> getMoodData() async {
-    return await StorageHelper.loadMoodData();
+    return await CacheService().getMoodData(); 
   }
 }

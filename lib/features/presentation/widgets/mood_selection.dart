@@ -14,7 +14,8 @@ class MoodSelection extends StatelessWidget {
   final Function(int) onMoodButtonSelected;
   final Function(String) onSubButtonTap;
 
-  const MoodSelection({super.key, 
+  const MoodSelection({
+    Key? key,
     required this.selectedIndex,
     required this.expandedIndex,
     required this.buttonLabels,
@@ -22,7 +23,7 @@ class MoodSelection extends StatelessWidget {
     required this.subButtonLabels,
     required this.onMoodButtonSelected,
     required this.onSubButtonTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

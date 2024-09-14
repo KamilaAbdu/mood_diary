@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:mood_diary/core/constants/app_assets.dart';
+import 'package:mood_diary/core/constants/app_colors.dart';
 import 'package:mood_diary/features/presentation/screens/calendar_screen.dart';
 import 'package:mood_diary/features/presentation/screens/start_screen.dart';
 import 'package:mood_diary/features/presentation/widgets/custom_app_bar.dart';
@@ -53,6 +54,7 @@ class _MainScreenState extends State<MainScreen> {
     ];
 
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: CustomAppBar(
         time: time,
         onBackPressed: () {Navigator.push(
@@ -66,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const CalendarScreen(),
+              builder: (context) => CalendarScreen(),
             ),
           );
         },

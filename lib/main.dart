@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:mood_diary/features/data/providers/mood_provider.dart';
-import 'package:mood_diary/features/data/sources/mood_local_data_source.dart';
 import 'package:mood_diary/features/domain/repositories/mood_repository_impl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mood_diary/features/presentation/screens/start_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:mood_diary/core/services/cache_service.dart';
 
 void main() async {
   await initializeDateFormatting('ru_RU', null);
@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => MoodProvider(
-            MoodRepositoryImpl(MoodLocalDataSource()), 
+            MoodRepositoryImpl(CacheService()),  
           ),
         ),
       ],

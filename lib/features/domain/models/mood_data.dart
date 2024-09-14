@@ -1,15 +1,20 @@
 class MoodData {
   final String date;
-  final double moodLevel;
+  final int moodLevel;
 
   MoodData(this.date, this.moodLevel);
 
-  Map<String, dynamic> toJson() => {
-        'date': date,
-        'moodLevel': moodLevel,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'date': date,
+      'moodLevel': moodLevel,
+    };
+  }
 
   factory MoodData.fromJson(Map<String, dynamic> json) {
-    return MoodData(json['date'], json['moodLevel']);
+    return MoodData(
+      json['date'],
+      json['moodLevel'],
+    );
   }
 }

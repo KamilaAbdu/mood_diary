@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mood_diary/core/constants/app_dimens.dart';
+import 'package:mood_diary/core/constants/app_colors.dart';
 import 'package:mood_diary/core/constants/app_text_styles.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:mood_diary/features/presentation/widgets/month_calendar.dart';
+import 'package:mood_diary/features/presentation/widgets/weekday_header.dart';
+
+void main() => runApp(MaterialApp(home: CalendarScreen()));
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -12,62 +15,70 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   late DateTime _selectedDay;
-  late DateTime _focusedDay;
+  DateTime _today = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = DateTime.now();
-    _focusedDay = DateTime.now();
+    _selectedDay = _today;
+  }
+
+  void _goToToday() {
+    setState(() {
+      _selectedDay = _today;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Календарь'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TableCalendar(
-              firstDay: DateTime.utc(2020, 01, 01),
-              lastDay: DateTime.utc(2030, 12, 31),
-              focusedDay: _focusedDay,
-              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                });
-              },
-              calendarFormat: CalendarFormat.month,
-              onFormatChanged: (format) {},
-              calendarStyle: const CalendarStyle(
-                selectedDecoration: BoxDecoration(
-                  color: Colors.orange,
-                  shape: BoxShape.circle,
-                ),
-                todayDecoration: BoxDecoration(
-                  color: Colors.blue,
-                  shape: BoxShape.circle,
-                ),
-                outsideDaysVisible: false,
-              ),
-              headerStyle: const HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-              ),
-            ),
-            const SizedBox(height: AppDimens.mediumVerticalPadding),
-            Text(
-              'Selected Date: ${_selectedDay.toLocal()}',
-              style: AppTextStyles.s18w700,
-            ),
-          ],
+        leading: IconButton(
+          icon: const Icon(
+            Icons.close,
+            size: 26,
+            color: AppColors.grey,
+          ),
+          onPressed: () {
+            Navigator.of(context).maybePop();
+          },
         ),
+        title: TextButton(
+          onPressed: _goToToday,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              'Сегодня',
+              style: AppTextStyles.s18w600.copyWith(color: AppColors.grey)
+            ),
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: Column(
+        children: [
+          WeekdayHeader(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 12,
+              itemBuilder: (context, index) {
+                DateTime month = DateTime(_today.year, _today.month + index, 1);
+                return MonthCalendar(
+                    month: month,
+                    today: _today,
+                    selectedDay: _selectedDay,
+                    onDaySelected: (DateTime day) {
+                      setState(() {
+                        _selectedDay = day;
+                      });
+                    });
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
